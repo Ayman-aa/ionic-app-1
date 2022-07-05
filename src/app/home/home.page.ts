@@ -38,6 +38,24 @@ export class HomePage {
       source: CameraSource.Photos,
 
     });
+    console.log(image);
+
+    if(image){
+      const loading = await this.loadingController.create();
+      await loading.present();
+
+      const results = await this.avatarService.uploadImage(image);
+      loading.dismiss();
+
+      if(!results){
+        const alert = await this.alertController.create({
+          header:'Upload Failed',
+          message:'There was a problem uploading your avatar',
+          buttons:['OK'],
+        });
+        await alert.present();
+      }
+    }
   }
 
 }
